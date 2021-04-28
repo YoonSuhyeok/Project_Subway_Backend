@@ -1,8 +1,5 @@
 import { sequelize } from './models/index';
 import App from './App';
-import dotenv from 'dotenv';
-
-
 
 const app = new App().application;
 
