@@ -4,14 +4,21 @@
   "description": "Sub-Way Backend",
   "main": "index.js",
   "scripts": {
-    "start": "node build/index.js",
-    "dev": "nodemon src/index.ts",
+    "start": "node build/server.js",
+    "dev": "nodemon src/server.ts",
     "build": "tsc -p ."
   },
   "author": "DeadLine",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mariadb": "^2.5.3",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.6.2",
+    "sequelize-cli": "^6.2.0",
+    "typeorm": "^0.2.31"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
