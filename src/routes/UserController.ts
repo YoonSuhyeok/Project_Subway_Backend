@@ -13,38 +13,38 @@ const connection = mysql.createConnection({
 //connection.connect();
 
 const UserController: express.Router = express.Router();
-
+//User에 있는 모든 정보를 가져옵니다.
 UserController.get('/', (req: express.Request, res: express.Response) => {
     connection.query('SELECT * from User', function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });
 })
-
+//User중 선택한 User_id의 정보를 가져옵니다.
 UserController.get('/:id', (req: express.Request, res: express.Response) => {
-    connection.query("SELECT * FROM User` WHERE User`_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
+    connection.query("SELECT * FROM User WHERE User_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });
 })
-
+//User에 데이터를 추가합니다.
 UserController.post('/', (req: express.Request, res: express.Response) => {
-    // DB에 auto_increment로 했음 좋겠습니다.
-    connection.query("INSERT INTO User` VALUES(" + `${req.body.id}, '${req.body.name}'` +");", function (error:String, rows:String, fields:String) {
+    connection.query(`INSERT INTO User VALUES ( ${req.body.id}, '${req.body.email}', '${req.body.password}','${req.body.nickname}');`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
     });
-    res.send(`${req.body.name}을 넣었습니다.`);
+    res.send(`${req.body.id}을 넣었습니다.`);
 })
 
+// 
 UserController.put('/', (req: express.Request, res: express.Response) => {
-    connection.query("UPDATE User` SET User`_name ="+ `${req.body.name}` + "WHERE User`_id = " + `${req.body.id}` + ";", function (error:String, rows:String, fields:String) {
+    connection.query(`UPDATE User SET User_password = '${req.body.password}', User_nickname = '${req.body.nickname}' WHERE User_email = '${req.body.email}';`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
     });
-    res.send(`${req.body.id}번째를 수정하였습니다.`);
+    res.send(`${req.body.nickname}의 정보를 수정하였습니다.`);
 })
 
 UserController.delete('/:id', (req: express.Request, res: express.Response) => {
-    connection.query("DELETE FROM User` WHERE User`_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
+    connection.query(`DELETE FROM User WHERE User_id =${req.params.id};` , function (error:String, rows:String, fields:String){
         if (error) throw error;
     });
     res.send(`${req.params.id}를 삭제했습니다!`);
