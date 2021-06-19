@@ -22,7 +22,7 @@ alleryController.get('/', (req: express.Request, res: express.Response) => {
 })
 
 alleryController.get('/:id', (req: express.Request, res: express.Response) => {
-    connection.query("SELECT * FROM Allergy WHERE Allergy_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
+    connection.query(`SELECT * FROM Allergy WHERE Allergy_id = ${req.params.id};`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });
