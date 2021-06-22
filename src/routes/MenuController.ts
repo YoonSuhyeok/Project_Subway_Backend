@@ -29,7 +29,7 @@ MenuController.get('/:id', (req: express.Request, res: express.Response) => {
 })
 //Menu에 데이터를 추가합니다.
 MenuController.post('/', (req: express.Request, res: express.Response) => {
-    connection.query(`INSERT INTO Menu VALUES ( ${req.body.id}, '${req.body.name}', '${req.body.calorie}','${req.body.price}','${req.body.imageUrl},'${req.body.describe}'');`, function (error:String, rows:String, fields:String) {
+    connection.query(`INSERT INTO Menu VALUES ( ${req.body.id}, '${req.body.name}', '${req.body.calorie}','${req.body.price}','${req.body.imageUrl},'${req.body.describe}');`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
     });
     res.send(`${req.body.id}을 넣었습니다.`);

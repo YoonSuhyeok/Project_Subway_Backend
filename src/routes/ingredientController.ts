@@ -28,6 +28,13 @@ ingredientController.get('/:id', (req: express.Request, res: express.Response) =
     });
 })
 
+ingredientController.get('/:type', (req: express.Request, res: express.Response) => {
+    connection.query(`SELECT * FROM Ingredient WHERE Ingredient_type = ${req.params.type};`, function (error:String, rows:String, fields:String) {
+        if (error) throw error;
+        res.json(rows);
+    });
+})
+
 ingredientController.post('/', (req: express.Request, res: express.Response) => {
     // DB에 auto_increment로 했음 좋겠습니다.
     connection.query(`INSERT INTO Ingredient VALUES ( ${req.body.id}, ${req.body.type}, ${req.body.name}, ${req.body.calorie}, ${req.body.price}, ${req.body.url} );`, function (error:String, rows:String, fields:String) {
