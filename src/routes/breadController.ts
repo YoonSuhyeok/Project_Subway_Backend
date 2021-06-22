@@ -30,14 +30,14 @@ breadController.get('/:name', (req: express.Request, res: express.Response) => {
 
 breadController.post('/', (req: express.Request, res: express.Response) => {
     // DB에 auto_increment로 했음 좋겠습니다. INSERT INTO Bread VALUES ( 1, "name", 123, 245, "df", 123);
-    connection.query(`INSERT INTO Bread VALUES ( ${req.body.id}, "${req.body.name}", ${req.body.calorie}, ${req.body.price}, "${req.body.url}", ${req.body.length});`, function (error:String, rows:String, fields:String) {
+    connection.query(`INSERT INTO Bread VALUES ( ${req.body.id}, "${req.body.name}", ${req.body.calorie},"${req.body.url}");`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
     });
     res.send(`${req.body.name}을 넣었습니다.`);
 })
 
 breadController.put('/', (req: express.Request, res: express.Response) => {
-    connection.query(`UPDATE Bread SET Bread_name = "${req.body.name}", Bread_calorie = ${req.body.calorie}, Bread_price = ${req.body.price}, Bread_imageUrl = "${req.body.url}", Bread_length = ${req.body.length}  WHERE Bread_id = ${req.body.id};`, function (error:String, rows:String, fields:String) {
+    connection.query(`UPDATE Bread SET Bread_name = "${req.body.name}", Bread_calorie = ${req.body.calorie}, Bread_imageUrl = "${req.body.url}"  WHERE Bread_id = ${req.body.id};`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
     });
     res.send(`${req.body.id}번째를 수정하였습니다.`);
