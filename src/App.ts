@@ -5,6 +5,7 @@ import ingredientController from './routes/ingredientController';
 import recipeCntroller from './routes/recipeCntroller';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
+import authController from './routes/auth';
 
 class App {
   public application: express.Application;
@@ -24,8 +25,9 @@ class App {
     this.application.use('/bread', breadController);
     this.application.use('/combination', recipeCntroller);
     this.application.use('/ingredient', ingredientController);
-    this.application.use('/user',UserController);
-    this.application.use('/user',MenuController);
+    this.application.use('/user', UserController);
+    this.application.use('/user', MenuController);
+    this.application.use('/auth', authController);
   }
 }
 
