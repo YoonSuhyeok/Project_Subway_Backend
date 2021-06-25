@@ -4,7 +4,7 @@ import type { Bread, BreadId } from './Bread';
 import type { Choice_Ingredient, Choice_IngredientId } from './Choice_Ingredient';
 import type { Ingredient, IngredientId } from './Ingredient';
 import type { Menu, MenuId } from './Menu';
-import type { Rating(Comment), Rating(Comment)Id } from './Rating(Comment)';
+import type { Rating, RatingId } from './Rating(Comment)';
 import type { User, UserId } from './User';
 
 export interface RecipeAttributes {
@@ -51,29 +51,29 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
   hasChoice_Ingredients!: Sequelize.HasManyHasAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
   countChoice_Ingredients!: Sequelize.HasManyCountAssociationsMixin;
   // Recipe belongsToMany Ingredient via Recipe.id and Ingredient.id
-  Ingredient.id_Ingredients!: Ingredient[];
-  getIngredient.id_Ingredients!: Sequelize.BelongsToManyGetAssociationsMixin<Ingredient>;
-  setIngredient.id_Ingredients!: Sequelize.BelongsToManySetAssociationsMixin<Ingredient, IngredientId>;
-  addIngredient.id_Ingredient!: Sequelize.BelongsToManyAddAssociationMixin<Ingredient, IngredientId>;
-  addIngredient.id_Ingredients!: Sequelize.BelongsToManyAddAssociationsMixin<Ingredient, IngredientId>;
-  createIngredient.id_Ingredient!: Sequelize.BelongsToManyCreateAssociationMixin<Ingredient>;
-  removeIngredient.id_Ingredient!: Sequelize.BelongsToManyRemoveAssociationMixin<Ingredient, IngredientId>;
-  removeIngredient.id_Ingredients!: Sequelize.BelongsToManyRemoveAssociationsMixin<Ingredient, IngredientId>;
-  hasIngredient.id_Ingredient!: Sequelize.BelongsToManyHasAssociationMixin<Ingredient, IngredientId>;
-  hasIngredient.id_Ingredients!: Sequelize.BelongsToManyHasAssociationsMixin<Ingredient, IngredientId>;
-  countIngredient.id_Ingredients!: Sequelize.BelongsToManyCountAssociationsMixin;
-  // Recipe hasMany Rating(Comment) via Combination_id
-  Rating(Comment)s!: Rating(Comment)[];
-  getRating(Comment)s!: Sequelize.HasManyGetAssociationsMixin<Rating(Comment)>;
-  setRating(Comment)s!: Sequelize.HasManySetAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  addRating(Comment)!: Sequelize.HasManyAddAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  addRating(Comment)s!: Sequelize.HasManyAddAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  createRating(Comment)!: Sequelize.HasManyCreateAssociationMixin<Rating(Comment)>;
-  removeRating(Comment)!: Sequelize.HasManyRemoveAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  removeRating(Comment)s!: Sequelize.HasManyRemoveAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  hasRating(Comment)!: Sequelize.HasManyHasAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  hasRating(Comment)s!: Sequelize.HasManyHasAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  countRating(Comment)s!: Sequelize.HasManyCountAssociationsMixin;
+  Ingredient_id_Ingredients!: Ingredient[];
+  getIngredient_id_Ingredients!: Sequelize.BelongsToManyGetAssociationsMixin<Ingredient>;
+  setIngredient_id_Ingredients!: Sequelize.BelongsToManySetAssociationsMixin<Ingredient, IngredientId>;
+  addIngredient_id_Ingredient!: Sequelize.BelongsToManyAddAssociationMixin<Ingredient, IngredientId>;
+  addIngredient_id_Ingredients!: Sequelize.BelongsToManyAddAssociationsMixin<Ingredient, IngredientId>;
+  createIngredient_id_Ingredient!: Sequelize.BelongsToManyCreateAssociationMixin<Ingredient>;
+  removeIngredient_id_Ingredient!: Sequelize.BelongsToManyRemoveAssociationMixin<Ingredient, IngredientId>;
+  removeIngredient_id_Ingredients!: Sequelize.BelongsToManyRemoveAssociationsMixin<Ingredient, IngredientId>;
+  hasIngredient_id_Ingredient!: Sequelize.BelongsToManyHasAssociationMixin<Ingredient, IngredientId>;
+  hasIngredient_id_Ingredients!: Sequelize.BelongsToManyHasAssociationsMixin<Ingredient, IngredientId>;
+  countIngredient_id_Ingredients!: Sequelize.BelongsToManyCountAssociationsMixin;
+  // Recipe hasMany Rating via Combination_id
+  Ratings!: Rating[];
+  getRatings!: Sequelize.HasManyGetAssociationsMixin<Rating>;
+  setRatings!: Sequelize.HasManySetAssociationsMixin<Rating, RatingId>;
+  addRating!: Sequelize.HasManyAddAssociationMixin<Rating, RatingId>;
+  addRatings!: Sequelize.HasManyAddAssociationsMixin<Rating, RatingId>;
+  createRating!: Sequelize.HasManyCreateAssociationMixin<Rating>;
+  removeRating!: Sequelize.HasManyRemoveAssociationMixin<Rating, RatingId>;
+  removeRatings!: Sequelize.HasManyRemoveAssociationsMixin<Rating, RatingId>;
+  hasRating!: Sequelize.HasManyHasAssociationMixin<Rating, RatingId>;
+  hasRatings!: Sequelize.HasManyHasAssociationsMixin<Rating, RatingId>;
+  countRatings!: Sequelize.HasManyCountAssociationsMixin;
   // Recipe belongsToMany User via Combination_id and User_id
   User_id_Users!: User[];
   getUser_id_Users!: Sequelize.BelongsToManyGetAssociationsMixin<User>;

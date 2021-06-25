@@ -17,15 +17,15 @@ export class Choice_Ingredient extends Model<Choice_IngredientAttributes, Choice
   'Ingredient.id'!: number;
 
   // Choice_Ingredient belongsTo Ingredient via Ingredient.id
-  Ingredient.!: Ingredient;
-  getIngredient.!: Sequelize.BelongsToGetAssociationMixin<Ingredient>;
-  setIngredient.!: Sequelize.BelongsToSetAssociationMixin<Ingredient, IngredientId>;
-  createIngredient.!: Sequelize.BelongsToCreateAssociationMixin<Ingredient>;
+  Ingredient!: Ingredient;
+  getIngredient!: Sequelize.BelongsToGetAssociationMixin<Ingredient>;
+  setIngredient!: Sequelize.BelongsToSetAssociationMixin<Ingredient, IngredientId>;
+  createIngredient!: Sequelize.BelongsToCreateAssociationMixin<Ingredient>;
   // Choice_Ingredient belongsTo Recipe via Recipe.id
-  Recipe.!: Recipe;
-  getRecipe.!: Sequelize.BelongsToGetAssociationMixin<Recipe>;
-  setRecipe.!: Sequelize.BelongsToSetAssociationMixin<Recipe, RecipeId>;
-  createRecipe.!: Sequelize.BelongsToCreateAssociationMixin<Recipe>;
+  Recipe!: Recipe;
+  getRecipe!: Sequelize.BelongsToGetAssociationMixin<Recipe>;
+  setRecipe!: Sequelize.BelongsToSetAssociationMixin<Recipe, RecipeId>;
+  createRecipe!: Sequelize.BelongsToCreateAssociationMixin<Recipe>;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Choice_Ingredient {
     Choice_Ingredient.init({

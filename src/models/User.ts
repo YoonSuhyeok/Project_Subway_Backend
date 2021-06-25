@@ -1,8 +1,7 @@
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
-import type { Rating(Comment), Rating(Comment)Id } from './Rating(Comment)';
+import type { Rating, RatingId } from './Rating(Comment)';
 import type { Recipe, RecipeId } from './Recipe';
-import type { UserToAllergy, UserToAllergyId } from './UserToAllergy';
 
 export interface UserAttributes {
   User_id: number;
@@ -21,18 +20,18 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   User_password!: string;
   User_nickname!: string;
 
-  // User hasMany Rating(Comment) via User_id
-  Rating(Comment)s!: Rating(Comment)[];
-  getRating(Comment)s!: Sequelize.HasManyGetAssociationsMixin<Rating(Comment)>;
-  setRating(Comment)s!: Sequelize.HasManySetAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  addRating(Comment)!: Sequelize.HasManyAddAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  addRating(Comment)s!: Sequelize.HasManyAddAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  createRating(Comment)!: Sequelize.HasManyCreateAssociationMixin<Rating(Comment)>;
-  removeRating(Comment)!: Sequelize.HasManyRemoveAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  removeRating(Comment)s!: Sequelize.HasManyRemoveAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  hasRating(Comment)!: Sequelize.HasManyHasAssociationMixin<Rating(Comment), Rating(Comment)Id>;
-  hasRating(Comment)s!: Sequelize.HasManyHasAssociationsMixin<Rating(Comment), Rating(Comment)Id>;
-  countRating(Comment)s!: Sequelize.HasManyCountAssociationsMixin;
+  // User hasMany Rating via User_id
+  Ratings!: Rating[];
+  getRatings!: Sequelize.HasManyGetAssociationsMixin<Rating>;
+  setRatings!: Sequelize.HasManySetAssociationsMixin<Rating, RatingId>;
+  addRating!: Sequelize.HasManyAddAssociationMixin<Rating, RatingId>;
+  addRatings!: Sequelize.HasManyAddAssociationsMixin<Rating, RatingId>;
+  createRating!: Sequelize.HasManyCreateAssociationMixin<Rating>;
+  removeRating!: Sequelize.HasManyRemoveAssociationMixin<Rating, RatingId>;
+  removeRatings!: Sequelize.HasManyRemoveAssociationsMixin<Rating, RatingId>;
+  hasRating!: Sequelize.HasManyHasAssociationMixin<Rating, RatingId>;
+  hasRatings!: Sequelize.HasManyHasAssociationsMixin<Rating, RatingId>;
+  countRatings!: Sequelize.HasManyCountAssociationsMixin;
   // User belongsToMany Recipe via User_id and Combination_id
   Combination_id_Recipes!: Recipe[];
   getCombination_id_Recipes!: Sequelize.BelongsToManyGetAssociationsMixin<Recipe>;
@@ -57,18 +56,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   hasRecipe!: Sequelize.HasManyHasAssociationMixin<Recipe, RecipeId>;
   hasRecipes!: Sequelize.HasManyHasAssociationsMixin<Recipe, RecipeId>;
   countRecipes!: Sequelize.HasManyCountAssociationsMixin;
-  // User hasMany UserToAllergy via User_id
-  UserToAllergies!: UserToAllergy[];
-  getUserToAllergies!: Sequelize.HasManyGetAssociationsMixin<UserToAllergy>;
-  setUserToAllergies!: Sequelize.HasManySetAssociationsMixin<UserToAllergy, UserToAllergyId>;
-  addUserToAllergy!: Sequelize.HasManyAddAssociationMixin<UserToAllergy, UserToAllergyId>;
-  addUserToAllergies!: Sequelize.HasManyAddAssociationsMixin<UserToAllergy, UserToAllergyId>;
-  createUserToAllergy!: Sequelize.HasManyCreateAssociationMixin<UserToAllergy>;
-  removeUserToAllergy!: Sequelize.HasManyRemoveAssociationMixin<UserToAllergy, UserToAllergyId>;
-  removeUserToAllergies!: Sequelize.HasManyRemoveAssociationsMixin<UserToAllergy, UserToAllergyId>;
-  hasUserToAllergy!: Sequelize.HasManyHasAssociationMixin<UserToAllergy, UserToAllergyId>;
-  hasUserToAllergies!: Sequelize.HasManyHasAssociationsMixin<UserToAllergy, UserToAllergyId>;
-  countUserToAllergies!: Sequelize.HasManyCountAssociationsMixin;
+
 
   static initModel(sequelize: Sequelize.Sequelize): typeof User {
     User.init({

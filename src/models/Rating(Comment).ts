@@ -3,36 +3,36 @@ import { DataTypes, Model, Optional } from 'sequelize';
 import type { Recipe, RecipeId } from './Recipe';
 import type { User, UserId } from './User';
 
-export interface Rating(Comment)Attributes {
+export interface RatingAttributes {
   User_id: number;
   Combination_id: number;
   Rating_score: number;
   Rating_dateCreated: string;
 }
 
-export type Rating(Comment)Pk = "User_id" | "Combination_id";
-export type Rating(Comment)Id = Rating(Comment)[Rating(Comment)Pk];
-export type Rating(Comment)CreationAttributes = Optional<Rating(Comment)Attributes, Rating(Comment)Pk>;
+export type RatingPk = "User_id" | "Combination_id";
+export type RatingId = Rating[RatingPk];
+export type RatingCreationAttributes = Optional<RatingAttributes, RatingPk>;
 
-export class Rating(Comment) extends Model<Rating(Comment)Attributes, Rating(Comment)CreationAttributes> implements Rating(Comment)Attributes {
+export class Rating extends Model<RatingAttributes, RatingCreationAttributes> implements RatingAttributes {
   User_id!: number;
   Combination_id!: number;
   Rating_score!: number;
   Rating_dateCreated!: string;
 
-  // Rating(Comment) belongsTo Recipe via Combination_id
+  // Rating belongsTo Recipe via Combination_id
   Combination!: Recipe;
   getCombination!: Sequelize.BelongsToGetAssociationMixin<Recipe>;
   setCombination!: Sequelize.BelongsToSetAssociationMixin<Recipe, RecipeId>;
   createCombination!: Sequelize.BelongsToCreateAssociationMixin<Recipe>;
-  // Rating(Comment) belongsTo User via User_id
+  // Rating belongsTo User via User_id
   User!: User;
   getUser!: Sequelize.BelongsToGetAssociationMixin<User>;
   setUser!: Sequelize.BelongsToSetAssociationMixin<User, UserId>;
   createUser!: Sequelize.BelongsToCreateAssociationMixin<User>;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Rating(Comment) {
-    Rating(Comment).init({
+  static initModel(sequelize: Sequelize.Sequelize): typeof Rating {
+    Rating.init({
     User_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -61,7 +61,7 @@ export class Rating(Comment) extends Model<Rating(Comment)Attributes, Rating(Com
     }
   }, {
     sequelize,
-    tableName: 'Rating(Comment)',
+    tableName: 'Rating',
     timestamps: false,
     indexes: [
       {
@@ -82,6 +82,6 @@ export class Rating(Comment) extends Model<Rating(Comment)Attributes, Rating(Com
       },
     ]
   });
-  return Rating(Comment);
+  return Rating;
   }
 }

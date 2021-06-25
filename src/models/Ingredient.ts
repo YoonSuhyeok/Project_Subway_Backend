@@ -37,17 +37,17 @@ export class Ingredient extends Model<IngredientAttributes, IngredientCreationAt
   hasChoice_Ingredients!: Sequelize.HasManyHasAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
   countChoice_Ingredients!: Sequelize.HasManyCountAssociationsMixin;
   // Ingredient belongsToMany Recipe via Ingredient.id and Recipe.id
-  Recipe.id_Recipes!: Recipe[];
-  getRecipe.id_Recipes!: Sequelize.BelongsToManyGetAssociationsMixin<Recipe>;
-  setRecipe.id_Recipes!: Sequelize.BelongsToManySetAssociationsMixin<Recipe, RecipeId>;
-  addRecipe.id_Recipe!: Sequelize.BelongsToManyAddAssociationMixin<Recipe, RecipeId>;
-  addRecipe.id_Recipes!: Sequelize.BelongsToManyAddAssociationsMixin<Recipe, RecipeId>;
-  createRecipe.id_Recipe!: Sequelize.BelongsToManyCreateAssociationMixin<Recipe>;
-  removeRecipe.id_Recipe!: Sequelize.BelongsToManyRemoveAssociationMixin<Recipe, RecipeId>;
-  removeRecipe.id_Recipes!: Sequelize.BelongsToManyRemoveAssociationsMixin<Recipe, RecipeId>;
-  hasRecipe.id_Recipe!: Sequelize.BelongsToManyHasAssociationMixin<Recipe, RecipeId>;
-  hasRecipe.id_Recipes!: Sequelize.BelongsToManyHasAssociationsMixin<Recipe, RecipeId>;
-  countRecipe.id_Recipes!: Sequelize.BelongsToManyCountAssociationsMixin;
+  Recipe_id_Recipes!: Recipe[];
+  getRecipe_id_Recipes!: Sequelize.BelongsToManyGetAssociationsMixin<Recipe>;
+  setRecipe_id_Recipes!: Sequelize.BelongsToManySetAssociationsMixin<Recipe, RecipeId>;
+  addRecipe_id_Recipe!: Sequelize.BelongsToManyAddAssociationMixin<Recipe, RecipeId>;
+  addRecipe_id_Recipes!: Sequelize.BelongsToManyAddAssociationsMixin<Recipe, RecipeId>;
+  createRecipe_id_Recipe!: Sequelize.BelongsToManyCreateAssociationMixin<Recipe>;
+  removeRecipe_id_Recipe!: Sequelize.BelongsToManyRemoveAssociationMixin<Recipe, RecipeId>;
+  removeRecipe_id_Recipes!: Sequelize.BelongsToManyRemoveAssociationsMixin<Recipe, RecipeId>;
+  hasRecipe_id_Recipe!: Sequelize.BelongsToManyHasAssociationMixin<Recipe, RecipeId>;
+  hasRecipe_id_Recipes!: Sequelize.BelongsToManyHasAssociationsMixin<Recipe, RecipeId>;
+  countRecipe_id_Recipes!: Sequelize.BelongsToManyCountAssociationsMixin;
 
   static initModel(sequelize: Sequelize.Sequelize): typeof Ingredient {
     Ingredient.init({
