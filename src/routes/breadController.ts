@@ -11,14 +11,40 @@ const connection = mysql.createConnection({
   database:process.env.DB_NAME
  });
 //connection.connect();
+import { sequelize } from '../models/index';
+const { Sequelize, DataTypes } = require('sequelize');
+
+const Bread = sequelize.define('Bread', {
+    // Model attributes are defined here
+    Bread_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+    },
+    Bread_name: {
+        type: DataTypes.STRING(45),
+        allowNull: false
+      },
+    Bread_calorie: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+    },
+    Bread_imageUrl: {
+        type: DataTypes.STRING(300),
+        allowNull: false
+    }
+  }, {
+    // Other model options go here
+    timestamps: false,
+  });
 
 const breadController: express.Router = express.Router();
 
 breadController.get('/', (req: express.Request, res: express.Response) => {
-    connection.query('SELECT * from Bread', function (error:String, rows:String, fields:String) {
-        if (error) throw error;
-        res.json(rows);
-    });
+    Bread.findAll().then( client =>
+        res.json(client)
+    );
+    
 })
 
 breadController.get('/:name', (req: express.Request, res: express.Response) => {

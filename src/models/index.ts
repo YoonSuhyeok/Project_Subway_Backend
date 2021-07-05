@@ -14,19 +14,5 @@ export const sequelize = new Sequelize(
         dialect: "mariadb"
     }
 )
-const PORT:number = parseInt(process.env.PORT as string, 10) || 5000;
-const HOST:string = process.env.HOST || 'localhost';
-const app = express();
-
-app.listen(PORT,HOST,async () => {
-    console.log(`Server Listening on ${HOST}:${PORT}`);
-
-    // //sequelize-db 연결 테스트
-     await sequelize.authenticate()
-     .then(async () => {
-         console.log("connection success");
-     })
-     .catch((e) => {
-         console.log('TT : ', e);
-     })
-})
+const PORT:number = +(process.env.DB_PORT as string);
+const HOST:string = process.env.DB_HOST as string ;
