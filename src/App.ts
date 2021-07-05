@@ -6,6 +6,8 @@ import recipeCntroller from './routes/recipeCntroller';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
 
+var sequelize = require('./models').sequelize;
+sequelize.sync();
 class App {
   public application: express.Application;
 
