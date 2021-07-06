@@ -12,42 +12,100 @@ const connection = mysql.createConnection({
  });
 //connection.connect();
 
+
+import { sequelize } from '../models/index';
+import { URLSearchParams } from 'node:url';
+import { timeStamp } from 'node:console';
+const {Sequelize,DataTypes} =require('sequelize');
+
+const Menu = sequelize.define('Menu', {
+    // Model attributes are defined here
+    Menu_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true
+      },
+      Menu_category: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      Menu_name: {
+        type: DataTypes.STRING(20),
+        allowNull: false
+      },
+      Menu_calorie: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      Menu_price15: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      Menu_price30: {
+        type: DataTypes.INTEGER,
+        allowNull: false
+      },
+      Menu_describe: {
+        type: DataTypes.STRING(300),
+        allowNull: false
+      },
+      Menu_imageUrl: {
+        type: DataTypes.STRING(300),
+        allowNull: false
+      }
+    }, {
+      tableName: 'Menu',
+      timestamps: false,
+      indexes: [
+        {
+          name: "PRIMARY",
+          unique: true,
+          using: "BTREE",
+          fields: [
+            { name: "Menu_id" },
+          ]
+        },
+      ]
+  });
+
 const MenuController: express.Router = express.Router();
-//User에 있는 모든 정보를 가져옵니다.
+//Menu에 있는 모든 정보를 가져옵니다.
 MenuController.get('/', (req: express.Request, res: express.Response) => {
-    connection.query('SELECT * from Menu', function (error:String, rows:String, fields:String) {
-        if (error) throw error;
-        res.json(rows);
-    });
+    Menu.findAll().then( client =>
+        res.json(client)
+    );
 })
 //Menu중 선택한 Menu_id의 정보를 가져옵니다.
 MenuController.get('/:id', (req: express.Request, res: express.Response) => {
-    connection.query("SELECT * FROM Menu WHERE Menu_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
-        if (error) throw error;
-        res.json(rows);
-    });
+    Menu.findOne({
+        where: {Menu_id : req.params.id}
+    }).then( client =>
+        res.json(client)
+    );
 })
 //Menu에 데이터를 추가합니다.
 MenuController.post('/', (req: express.Request, res: express.Response) => {
-    connection.query(`INSERT INTO Menu VALUES ( ${req.body.id}, '${req.body.name}', '${req.body.calorie}','${req.body.price}','${req.body.imageUrl},'${req.body.describe}'');`, function (error:String, rows:String, fields:String) {
-        if (error) throw error;
-    });
-    res.send(`${req.body.id}을 넣었습니다.`);
+    Menu.create({
+        Menu_id:req.body.id,Menu_category:req.body.category, Menu_name:req.body.name, Menu_calorie:req.body.calorie,Menu_price15:req.body.price15,Menu_price30:req.body.price30,Menu_describe:req.body.describe, Menu_imageUrl:req.body.url
+   }).then(client =>
+        res.json(client)
+   ); 
 })
 
-// 
-MenuController.put('/', (req: express.Request, res: express.Response) => {
-    connection.query(`UPDATE Menu SET Menu_price = '${req.body.price}' WHERE Menu_id = '${req.body.id}';`, function (error:String, rows:String, fields:String) {
-        if (error) throw error;
-    });
-    res.send(`${req.body.name}의 정보를 수정하였습니다.`);
+// 선택한 Menu의 정보(이름)를 수정합니다.
+MenuController.patch('/:id', (req: express.Request, res: express.Response) => {
+    Menu.update({Menu_name: 'Menu'},{where: {Menu_ID:req.params.id}})
+    .then(client => {
+        res.json(client)
+    }); 
 })
-
+// 선택한 Menu의 정보를 삭제합니다.
 MenuController.delete('/:id', (req: express.Request, res: express.Response) => {
-    connection.query(`DELETE FROM Menu WHERE Menu_id =${req.params.id};` , function (error:String, rows:String, fields:String){
-        if (error) throw error;
-    });
-    res.send(`${req.params.id}를 삭제했습니다!`);
+    Menu.destroy({
+        where: {Menu_id : req.params.id}
+    }).then(client =>
+        res.json(client)
+    );
 })
 //connection.end();
 
