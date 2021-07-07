@@ -106,7 +106,7 @@ recipeCntroller.get('/', (req: express.Request, res: express.Response) => {
         res.json(client)
     );
 })
-
+//asdasdasdasd
 // userID로 한 유저의 레시피 정보만 가져와 본다.    연구가필요합니다.
 recipeCntroller.get('/:userId', (req: express.Request, res: express.Response) => {
     Recipe.findOne({
