@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "sayoP",
+    "password": "3141",
+    "database": "subDB",
+    "host": "27.96.130.236",
+    "dialect": "mariadb"
+  }
+}
