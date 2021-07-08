@@ -17,6 +17,7 @@ const breadController: express.Router = express.Router();
 breadController.get('/', (req: express.Request, res: express.Response) => {
     connection.query('SELECT * from Bread', function (error:String, rows:String, fields:String) {
         if (error) throw error;
+        res.header("Access-Control-Allow-Origin", "*");
         res.json(rows);
     });
 })

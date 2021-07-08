@@ -5,6 +5,8 @@ import ingredientController from './routes/ingredientController';
 import recipeCntroller from './routes/recipeCntroller';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
+import authController from './routes/auth';
+const cors = require('cors');
 
 class App {
   public application: express.Application;
@@ -13,6 +15,7 @@ class App {
     this.application = express();
     this.application.use(express.json());
     this.application.use(express.urlencoded({ extended : true }));
+    this.application.use(cors());
     this.router();
   }
 
@@ -24,8 +27,9 @@ class App {
     this.application.use('/bread', breadController);
     this.application.use('/combination', recipeCntroller);
     this.application.use('/ingredient', ingredientController);
-    this.application.use('/user',UserController);
-    this.application.use('/user',MenuController);
+    this.application.use('/user', UserController);
+    this.application.use('/menu', MenuController);
+    this.application.use('/auth', authController);
   }
 }
 

@@ -22,7 +22,7 @@ MenuController.get('/', (req: express.Request, res: express.Response) => {
 })
 //Menu중 선택한 Menu_id의 정보를 가져옵니다.
 MenuController.get('/:id', (req: express.Request, res: express.Response) => {
-    connection.query("SELECT * FROM Menu WHERE Menu_id = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
+    connection.query("SELECT * FROM Menu WHERE Menu_category = " + `${req.params.id};`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });

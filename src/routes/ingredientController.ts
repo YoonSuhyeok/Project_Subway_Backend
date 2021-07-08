@@ -22,7 +22,7 @@ ingredientController.get('/', (req: express.Request, res: express.Response) => {
 })
 
 ingredientController.get('/:id', (req: express.Request, res: express.Response) => {
-    connection.query(`SELECT * FROM Ingredient WHERE Ingredient_id = ${req.params.id};`, function (error:String, rows:String, fields:String) {
+    connection.query(`SELECT * FROM Ingredient WHERE Ingredient_type = ${req.params.id};`, function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });
