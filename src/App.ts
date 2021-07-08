@@ -2,11 +2,12 @@ import express from 'express';
 import alleryController from './routes/allergyController';
 import breadController from './routes/breadController';
 import ingredientController from './routes/ingredientController';
-import recipeCntroller from './routes/recipeCntroller';
+import recipeCntroller from './routes/recipeController';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
 import authController from './routes/auth';
 const passport = require('passport');
+import { sequelize } from './models/index';
 
 const session = require('express-session')
 
@@ -33,9 +34,7 @@ class App {
     this.application.use(passport.initialize());
     this.application.use(passport.session());
     this.router();
-    sequelize.sync().then( client =>
-      console.log(client)
-    );
+    sequelize.sync();
   }
 
   private router(): void {
@@ -49,7 +48,7 @@ class App {
     this.application.use('/combination', recipeCntroller);
     this.application.use('/ingredient', ingredientController);
     this.application.use('/user', UserController);
-    this.application.use('/user', MenuController);
+    this.application.use('/menu', MenuController);
     this.application.use('/auth', authController);
   }
 }
