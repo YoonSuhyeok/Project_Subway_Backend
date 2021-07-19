@@ -1,10 +1,9 @@
-import express from 'express';
-import alleryController from './routes/allergyController';
 import breadController from './routes/breadController';
 import ingredientController from './routes/ingredientController';
 import recipeController from './routes/recipeController';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
+import express from 'express';
 
 var sequelize = require('./models').sequelize;
 sequelize.sync();
@@ -22,7 +21,6 @@ class App {
     this.application.get('/', (req: express.Request, res: express.Response) => {
       res.send('hello!');
     })
-    this.application.use('/allergy', alleryController);
     this.application.use('/bread', breadController);
     this.application.use('/recipe', recipeController);
     this.application.use('/ingredient', ingredientController);

@@ -22,6 +22,7 @@ const Menu = sequelize.define('Menu', {
     // Model attributes are defined here
     Menu_id: {
         type: DataTypes.INTEGER,
+        autoIncrement:true,
         allowNull: false,
         primaryKey: true
       },
