@@ -22,6 +22,7 @@ const Menu = sequelize.define('Menu', {
     // Model attributes are defined here
     Menu_id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
       },
@@ -86,7 +87,7 @@ MenuController.get('/:id', (req: express.Request, res: express.Response) => {
 //Menu에 데이터를 추가합니다.
 MenuController.post('/', (req: express.Request, res: express.Response) => {
     Menu.create({
-        Menu_id:req.body.id,Menu_category:req.body.category, Menu_name:req.body.name, Menu_calorie:req.body.calorie,Menu_price15:req.body.price15,Menu_price30:req.body.price30,Menu_describe:req.body.describe, Menu_imageUrl:req.body.url
+        Menu_category:req.body.Menu_category, Menu_name:req.body.Menu_name, Menu_calorie:req.body.Menu_calorie,Menu_price15:req.body.Menu_price15,Menu_price30:req.body.Menu_price30,Menu_describe:req.body.Menu_describe, Menu_imageUrl:req.body.Menu_imageUrl
    }).then(client =>
         res.json(client)
    ); 

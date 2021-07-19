@@ -24,6 +24,7 @@ const Recipe = sequelize.define('Recipe', {
     // Model attributes are defined here
     Recipe_id: {
         type: DataTypes.INTEGER,
+        autoIncrement: true,
         allowNull: false,
         primaryKey: true
       },
@@ -78,21 +79,21 @@ const Recipe = sequelize.define('Recipe', {
           ]
         },
         {
-          name: "fk_Bread_Recipe.id",
+          name: "fk_Recipe_Bread_id",
           using: "BTREE",
           fields: [
             { name: "Bread_id" },
           ]
         },
         {
-          name: "fk_Menu_Recipe.id",
+          name: "fk_Recipe_Menu_id",
           using: "BTREE",
           fields: [
             { name: "Menu_id" },
           ]
         },
         {
-          name: "fk_User_Recipe.id",
+          name: "fk_Recipe_User_id",
           using: "BTREE",
           fields: [
             { name: "User_id" },
@@ -100,7 +101,7 @@ const Recipe = sequelize.define('Recipe', {
         },
       ]
   });
-User.hasMany(Recipe)   
+//Recipe.hasOne(User)   
   
 const recipeController: express.Router = express.Router();
 
@@ -152,7 +153,7 @@ recipeController.get('/:userId', (req: express.Request, res: express.Response) =
 // 새로운 레시피의 정보를 추가합니다.    ??왜 안됨??? fk있으면 fk문제 저거 지우면 UnhandledPromiseRejectionWarning로 뜸 
 recipeController.post('/', (req: express.Request, res: express.Response) => {
     Recipe.create({
-        Recipe_id:req.body.id, Recipe_name:req.body.name, User_id:req.body.id, Menu_id:req.body.id, Bread_id:req.body.id, Recipe_datecreated:req.body.date
+        Recipe_id:req.body.Recipe_id, Recipe_name:req.body.Recipe_name, User_id:req.body.User_id, Menu_id:req.body.Menu_id, Bread_id:req.body.Bread_id, Recipe_dateCreated:req.body.Recipe_dateCreated
    }).then(client =>
         res.json(client)
    );    
