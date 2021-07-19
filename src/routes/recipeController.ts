@@ -15,6 +15,9 @@ const connection = mysql.createConnection({
 import { sequelize } from '../models/index';
 import { URLSearchParams } from 'node:url';
 import { timeStamp } from 'node:console';
+import { User } from '../models/User';
+import { HasMany } from 'sequelize-typescript';
+
 const {Sequelize,DataTypes} =require('sequelize');
 
 const Recipe = sequelize.define('Recipe', {
@@ -75,21 +78,21 @@ const Recipe = sequelize.define('Recipe', {
           ]
         },
         {
-          name: "fk_Combination_Bread_Bread.id",
+          name: "fk_Bread_Recipe.id",
           using: "BTREE",
           fields: [
             { name: "Bread_id" },
           ]
         },
         {
-          name: "fk_Combination_Menu_Menu.id",
+          name: "fk_Menu_Recipe.id",
           using: "BTREE",
           fields: [
             { name: "Menu_id" },
           ]
         },
         {
-          name: "fk_Combination_User_User.id",
+          name: "fk_User_Recipe.id",
           using: "BTREE",
           fields: [
             { name: "User_id" },
@@ -97,34 +100,57 @@ const Recipe = sequelize.define('Recipe', {
         },
       ]
   });
-
-const recipeCntroller: express.Router = express.Router();
+User.hasMany(Recipe)   
+  
+const recipeController: express.Router = express.Router();
 
 // 모든 유저의 조합식을 본다.
-recipeCntroller.get('/', (req: express.Request, res: express.Response) => {
+recipeController.get('/', (req: express.Request, res: express.Response) => {
     Recipe.findAll().then( client =>
         res.json(client)
     );
 })
-//asdasdasdasd
-// userID로 한 유저의 레시피 정보만 가져와 본다.    연구가필요합니다.
-recipeCntroller.get('/:userId', (req: express.Request, res: express.Response) => {
-    Recipe.findOne({
-        where: {Recipe_id : req.params.id}
-    }).then( client =>
-        res.json(client)
-    );
-})
 
+// userID로 그 유저의 모든 레시피정보를 가져온다.
+recipeController.get('/:id', (req: express.Request, res: express.Response) => {
+  
+  Recipe.findAll({
+    where: {User_id : req.params.id}
+  }).then( client =>
+    res.json(client)
+  );
+  /*
+    Recipe.findAll({
+    include: [{
+      where: { User_id :req.params.id}
+    }]
+    }).then( client =>
+    res.json(client)
+    );  
+  
+    Recipe.findOne({
+    where: {
+      'User.name$': {User_id :req.params.id}
+    },
+    include: [{
+      model : User
+    }]
+    }).then( client =>
+    res.json(client)
+    );  
+*/
+})
+/*
 // 한 유저가 하나의 레시피 조회한다. /userId?name=에그마요   연구연구
-recipeCntroller.get('/:userId', (req: express.Request, res: express.Response) => {
+recipeController.get('/:userId', (req: express.Request, res: express.Response) => {
     connection.query(`SELECT * from Recipe WHERE User_id = ${req.params.userId} AND Recipe_name = ${req.query.name}; `, function (error:String, rows:String, fields:String) {
         if (error) throw error;
         res.json(rows);
     });
 })
-// 새로운 레시피의 정보를 추가합니다.
-recipeCntroller.post('/', (req: express.Request, res: express.Response) => {
+*/
+// 새로운 레시피의 정보를 추가합니다.    ??왜 안됨??? fk있으면 fk문제 저거 지우면 UnhandledPromiseRejectionWarning로 뜸 
+recipeController.post('/', (req: express.Request, res: express.Response) => {
     Recipe.create({
         Recipe_id:req.body.id, Recipe_name:req.body.name, User_id:req.body.id, Menu_id:req.body.id, Bread_id:req.body.id, Recipe_datecreated:req.body.date
    }).then(client =>
@@ -132,23 +158,23 @@ recipeCntroller.post('/', (req: express.Request, res: express.Response) => {
    );    
 })
 
-// 한 유저가 하나의 레시피 메뉴의 이름을 수정한다.    연구연구
-recipeCntroller.patch('/:userId', (req: express.Request, res: express.Response) => {
-    Recipe.update({Recipe_name: 'recipe_name'},{where: {Recipe_ID:req.params.id}})
+// 한 유저가 하나의 레시피 메뉴의 이름을 수정한다. 
+recipeController.patch('/:userId/:RecipeId', (req: express.Request, res: express.Response) => {
+    Recipe.update({Recipe_name: 'recipe_name'},{where: {User_ID:req.params.id, Recipe_ID:req.params.id}})
     .then(client => {
         res.json(client)
     }); 
 })
 
-// 한 유저가 하나의 레시피의 빵 수정한다. ?recipeName=에그마요   연구연구
-recipeCntroller.put('/:userId', (req: express.Request, res: express.Response) => {
+// 한 유저가 하나의 레시피의 빵 수정한다. 
+recipeController.put('/:userId', (req: express.Request, res: express.Response) => {
     Recipe.update({Recipe_name: 'Wheet'},{where: {Recipe_ID:req.params.id}})
     .then(client => {
         res.json(client)
     }); 
 })
 //선택한 레시피의 정보를 삭제합니다.
-recipeCntroller.delete('/:recipeId', (req: express.Request, res: express.Response) => {
+recipeController.delete('/:recipeId', (req: express.Request, res: express.Response) => {
     Recipe.destroy({
         where: {Recipe_id : req.params.id}
     }).then(client =>
@@ -157,4 +183,4 @@ recipeCntroller.delete('/:recipeId', (req: express.Request, res: express.Respons
 })
 //connection.end();
 
-export default recipeCntroller;
+export default recipeController;

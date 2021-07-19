@@ -151,21 +151,21 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
         ]
       },
       {
-        name: "fk_Combination_Bread_Bread.id",
+        name: "fk_Bread_Recipe.id",
         using: "BTREE",
         fields: [
           { name: "Bread_id" },
         ]
       },
       {
-        name: "fk_Combination_Menu_Menu.id",
+        name: "fk_Menu_Recipe.id",
         using: "BTREE",
         fields: [
           { name: "Menu_id" },
         ]
       },
       {
-        name: "fk_Combination_User_User.id",
+        name: "fk_User_Recipe.id",
         using: "BTREE",
         fields: [
           { name: "User_id" },
