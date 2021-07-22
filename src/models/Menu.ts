@@ -1,6 +1,5 @@
-import * as Sequelize from 'sequelize';
-import { DataTypes, Model, Optional } from 'sequelize';
-import type { Recipe, RecipeId } from './Recipe';
+import { sequelize } from '../models/index';
+import { DataTypes,Model,Optional } from 'sequelize';
 
 export interface MenuAttributes {
   Menu_id: number;
@@ -15,9 +14,9 @@ export interface MenuAttributes {
 
 export type MenuPk = "Menu_id";
 export type MenuId = Menu[MenuPk];
-export type MenuCreationAttributes = Optional<MenuAttributes, MenuPk>;
-
-export class Menu extends Model<MenuAttributes, MenuCreationAttributes> implements MenuAttributes {
+interface MenuCreationAttributes extends Optional<MenuAttributes, MenuPk>{};
+export class Menu extends Model<MenuAttributes, MenuCreationAttributes>
+ implements MenuAttributes {
   Menu_id!: number;
   Menu_category!: number;
   Menu_name!: string;
@@ -26,24 +25,14 @@ export class Menu extends Model<MenuAttributes, MenuCreationAttributes> implemen
   Menu_price30!: number;
   Menu_describe!: string;
   Menu_imageUrl!: string;
+}
 
-  // Menu hasMany Recipe via Menu_id
-  Recipes!: Recipe[];
-  getRecipes!: Sequelize.HasManyGetAssociationsMixin<Recipe>;
-  setRecipes!: Sequelize.HasManySetAssociationsMixin<Recipe, RecipeId>;
-  addRecipe!: Sequelize.HasManyAddAssociationMixin<Recipe, RecipeId>;
-  addRecipes!: Sequelize.HasManyAddAssociationsMixin<Recipe, RecipeId>;
-  createRecipe!: Sequelize.HasManyCreateAssociationMixin<Recipe>;
-  removeRecipe!: Sequelize.HasManyRemoveAssociationMixin<Recipe, RecipeId>;
-  removeRecipes!: Sequelize.HasManyRemoveAssociationsMixin<Recipe, RecipeId>;
-  hasRecipe!: Sequelize.HasManyHasAssociationMixin<Recipe, RecipeId>;
-  hasRecipes!: Sequelize.HasManyHasAssociationsMixin<Recipe, RecipeId>;
-  countRecipes!: Sequelize.HasManyCountAssociationsMixin;
-
-  static initModel(sequelize: Sequelize.Sequelize): typeof Menu {
-    Menu.init({
-    Menu_id: {
+Menu.init(
+{
+  // Model attributes are defined here
+  Menu_id: {
       type: DataTypes.INTEGER,
+      autoIncrement:true,
       allowNull: false,
       primaryKey: true
     },
@@ -89,7 +78,6 @@ export class Menu extends Model<MenuAttributes, MenuCreationAttributes> implemen
         ]
       },
     ]
-  });
-  return Menu;
-  }
-}
+});
+
+export default Menu;

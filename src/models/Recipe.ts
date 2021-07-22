@@ -1,12 +1,10 @@
+import { sequelize } from '../models/index';
 import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { Bread, BreadId } from './Bread';
-import type { Choice_Ingredient, Choice_IngredientId } from './Choice_Ingredient';
 import type { Ingredient, IngredientId } from './Ingredient';
 import type { Menu, MenuId } from './Menu';
-import type { Rating, RatingId } from './Rating(Comment)';
 import type { User, UserId } from './User';
-
 export interface RecipeAttributes {
   Recipe_id: number;
   Recipe_name: string;
@@ -38,18 +36,7 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
   getMenu!: Sequelize.BelongsToGetAssociationMixin<Menu>;
   setMenu!: Sequelize.BelongsToSetAssociationMixin<Menu, MenuId>;
   createMenu!: Sequelize.BelongsToCreateAssociationMixin<Menu>;
-  // Recipe hasMany Choice_Ingredient via Recipe.id
-  Choice_Ingredients!: Choice_Ingredient[];
-  getChoice_Ingredients!: Sequelize.HasManyGetAssociationsMixin<Choice_Ingredient>;
-  setChoice_Ingredients!: Sequelize.HasManySetAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
-  addChoice_Ingredient!: Sequelize.HasManyAddAssociationMixin<Choice_Ingredient, Choice_IngredientId>;
-  addChoice_Ingredients!: Sequelize.HasManyAddAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
-  createChoice_Ingredient!: Sequelize.HasManyCreateAssociationMixin<Choice_Ingredient>;
-  removeChoice_Ingredient!: Sequelize.HasManyRemoveAssociationMixin<Choice_Ingredient, Choice_IngredientId>;
-  removeChoice_Ingredients!: Sequelize.HasManyRemoveAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
-  hasChoice_Ingredient!: Sequelize.HasManyHasAssociationMixin<Choice_Ingredient, Choice_IngredientId>;
-  hasChoice_Ingredients!: Sequelize.HasManyHasAssociationsMixin<Choice_Ingredient, Choice_IngredientId>;
-  countChoice_Ingredients!: Sequelize.HasManyCountAssociationsMixin;
+
   // Recipe belongsToMany Ingredient via Recipe.id and Ingredient.id
   Ingredient_id_Ingredients!: Ingredient[];
   getIngredient_id_Ingredients!: Sequelize.BelongsToManyGetAssociationsMixin<Ingredient>;
@@ -62,18 +49,7 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
   hasIngredient_id_Ingredient!: Sequelize.BelongsToManyHasAssociationMixin<Ingredient, IngredientId>;
   hasIngredient_id_Ingredients!: Sequelize.BelongsToManyHasAssociationsMixin<Ingredient, IngredientId>;
   countIngredient_id_Ingredients!: Sequelize.BelongsToManyCountAssociationsMixin;
-  // Recipe hasMany Rating via Combination_id
-  Ratings!: Rating[];
-  getRatings!: Sequelize.HasManyGetAssociationsMixin<Rating>;
-  setRatings!: Sequelize.HasManySetAssociationsMixin<Rating, RatingId>;
-  addRating!: Sequelize.HasManyAddAssociationMixin<Rating, RatingId>;
-  addRatings!: Sequelize.HasManyAddAssociationsMixin<Rating, RatingId>;
-  createRating!: Sequelize.HasManyCreateAssociationMixin<Rating>;
-  removeRating!: Sequelize.HasManyRemoveAssociationMixin<Rating, RatingId>;
-  removeRatings!: Sequelize.HasManyRemoveAssociationsMixin<Rating, RatingId>;
-  hasRating!: Sequelize.HasManyHasAssociationMixin<Rating, RatingId>;
-  hasRatings!: Sequelize.HasManyHasAssociationsMixin<Rating, RatingId>;
-  countRatings!: Sequelize.HasManyCountAssociationsMixin;
+  
   // Recipe belongsToMany User via Combination_id and User_id
   User_id_Users!: User[];
   getUser_id_Users!: Sequelize.BelongsToManyGetAssociationsMixin<User>;
@@ -91,88 +67,86 @@ export class Recipe extends Model<RecipeAttributes, RecipeCreationAttributes> im
   getUser!: Sequelize.BelongsToGetAssociationMixin<User>;
   setUser!: Sequelize.BelongsToSetAssociationMixin<User, UserId>;
   createUser!: Sequelize.BelongsToCreateAssociationMixin<User>;
-
-  static initModel(sequelize: Sequelize.Sequelize): typeof Recipe {
-    Recipe.init({
-    Recipe_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    Recipe_name: {
-      type: DataTypes.STRING(18),
-      allowNull: false
-    },
-    User_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'User',
-        key: 'User_id'
-      }
-    },
-    Menu_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'Menu',
-        key: 'Menu_id'
-      }
-    },
-    Bread_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'Bread',
-        key: 'Bread_id'
-      }
-    },
-    Recipe_dateCreated: {
-      type: DataTypes.DATEONLY,
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'Recipe',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Recipe_id" },
-          { name: "User_id" },
-          { name: "Menu_id" },
-          { name: "Bread_id" },
-        ]
-      },
-      {
-        name: "fk_Bread_Recipe.id",
-        using: "BTREE",
-        fields: [
-          { name: "Bread_id" },
-        ]
-      },
-      {
-        name: "fk_Menu_Recipe.id",
-        using: "BTREE",
-        fields: [
-          { name: "Menu_id" },
-        ]
-      },
-      {
-        name: "fk_User_Recipe.id",
-        using: "BTREE",
-        fields: [
-          { name: "User_id" },
-        ]
-      },
-    ]
-  });
-  return Recipe;
-  }
 }
+
+Recipe.init({
+  Recipe_id: {
+    autoIncrement: true,
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  Recipe_name: {
+    type: DataTypes.STRING(18),
+    allowNull: false
+  },
+  User_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: 'User',
+      key: 'User_id'
+    }
+  },
+  Menu_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: 'Menu',
+      key: 'Menu_id'
+    }
+  },
+  Bread_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: 'Bread',
+      key: 'Bread_id'
+    }
+  },
+  Recipe_dateCreated: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  }
+}, {
+  sequelize,
+  tableName: 'Recipe',
+  timestamps: false,
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "Recipe_id" },
+        { name: "User_id" },
+        { name: "Menu_id" },
+        { name: "Bread_id" },
+      ]
+    },
+    {
+      name: "fk_Recipe_Bread_id",
+      using: "BTREE",
+      fields: [
+        { name: "Bread_id" },
+      ]
+    },
+    {
+      name: "fk_Recipe_Menu_id",
+      using: "BTREE",
+      fields: [
+        { name: "Menu_id" },
+      ]
+    },
+    {
+      name: "fk_Recipe_User_id",
+      using: "BTREE",
+      fields: [
+        { name: "User_id" },
+      ]
+    },
+  ]
+});
