@@ -1,7 +1,34 @@
 import { sequelize } from '../models/index';
-import { DataTypes } from 'sequelize';
+import { DataTypes,Model,Optional } from 'sequelize';
 
-const Menu = sequelize.define('Menu', {
+export interface MenuAttributes {
+  Menu_id: number;
+  Menu_category: number;
+  Menu_name: string;
+  Menu_calorie: number;
+  Menu_price15: number;
+  Menu_price30: number;
+  Menu_describe: string;
+  Menu_imageUrl: string;
+}
+
+export type MenuPk = "Menu_id";
+export type MenuId = Menu[MenuPk];
+interface MenuCreationAttributes extends Optional<MenuAttributes, MenuPk>{};
+export class Menu extends Model<MenuAttributes, MenuCreationAttributes>
+ implements MenuAttributes {
+  Menu_id!: number;
+  Menu_category!: number;
+  Menu_name!: string;
+  Menu_calorie!: number;
+  Menu_price15!: number;
+  Menu_price30!: number;
+  Menu_describe!: string;
+  Menu_imageUrl!: string;
+}
+
+Menu.init(
+{
   // Model attributes are defined here
   Menu_id: {
       type: DataTypes.INTEGER,
@@ -38,6 +65,7 @@ const Menu = sequelize.define('Menu', {
       allowNull: false
     }
   }, {
+    sequelize,
     tableName: 'Menu',
     timestamps: false,
     indexes: [
