@@ -1,10 +1,12 @@
+const { DataTypes } =require('sequelize');
+import { sequelize } from '../models/index';
 import express from 'express';
 import { User } from '../models/User';
 
 const UserController: express.Router = express.Router();
 //User에 있는 모든 정보를 가져옵니다.
-UserController.get('/', (req: express.Request, res: express.Response) => {
-    User.findAll().then( client =>
+UserController.get('/', (req: express.Request, res: express.Response) => {  
+  User.findAll().then( client =>
         res.json(client)
     );
 })
@@ -19,7 +21,7 @@ UserController.get('/:id', (req: express.Request, res: express.Response) => {
 //User에 데이터를 추가합니다.
 UserController.post('/', (req: express.Request, res: express.Response) => {
     User.create({
-        User_id:req.body.id, User_email:req.body.email, User_password:req.body.password, User_nickname:req.body.nickname
+      User_nickname:req.body.nickname
    }).then(client =>
         res.json(client)
    );    
