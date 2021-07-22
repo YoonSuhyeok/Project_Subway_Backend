@@ -77,8 +77,8 @@ MenuController.get('/', (req: express.Request, res: express.Response) => {
 })
 //Menu중 선택한 Menu_id의 정보를 가져옵니다.
 MenuController.get('/:id', (req: express.Request, res: express.Response) => {
-    Menu.findOne({
-        where: {Menu_id : req.params.id}
+    Menu.findAll({
+        where: {Menu_category : req.params.id}
     }).then( client =>
         res.json(client)
     );

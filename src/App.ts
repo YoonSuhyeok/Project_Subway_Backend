@@ -8,6 +8,7 @@ import MenuController from './routes/MenuController';
 import authController from './routes/auth';
 const passport = require('passport');
 import { sequelize } from './models/index';
+const cors = require('cors');
 
 const session = require('express-session')
 
@@ -33,6 +34,7 @@ class App {
     }));
     this.application.use(passport.initialize());
     this.application.use(passport.session());
+    this.application.use(cors());
     this.router();
     sequelize.sync();
   }

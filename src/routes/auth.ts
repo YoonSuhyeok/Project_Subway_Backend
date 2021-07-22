@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 dotenv.config();
 const { DataTypes } =require('sequelize');
 import { sequelize } from '../models/index';
+import axios from 'axios';
 
 const User = sequelize.define('User', {
     // Model attributes are defined here
@@ -63,7 +64,7 @@ passport.use('kakao', new KakaoStrategy({
 }));
 
 passport.serializeUser( (user:any, done:any) => {
-    console.log('serialize');
+    console.log(user.id);
     done(null, user.id);
 });
 
@@ -72,19 +73,43 @@ passport.deserializeUser((id:any, done:any) => {
     done(null, id);
 });
 
-authController.get('/kakao', passport.authenticate('kakao'));
+
 
 authController.get('/kakao/callback', passport.authenticate('kakao', {
     failureRedirect: 'http://naver.com',
 }), (req, res) => {
-    res.redirect('http://localhost:3000');
+  console.log("hi");
+  console.log(req);
 });
 
 authController.get('/session', (req: express.Request, res: express.Response) => {
     console.log("hi" + req.session);
-    return res.send(req.session);
+    return res.send(req.session.userId);
 })
 
+const kakaoHeader = {
+  'Content-type': 'application/x-www-form-urlencoded;charset=utf-8',
+};
+
+
+
+authController.post('/kakao', async (req: express.Request, res) => {  
+  const code: string | undefined = req.headers.authorization?.substr(6);
+  try{
+    const redirectUrl = process.env.redirectUrl;
+    const result = await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=12a7a0cf669e322de8404d4da83ca650&redirect_uri=${redirectUrl}/logins&code=${code}`)
+    res.send(result.data);
+  } catch(e) {
+    console.log("에러 발생");
+  }
+  
+  
+  // return res.send(result.data);
+});
+
+authController.get('/kakao/verification', async (req: express.Request, res) => {
+
+})
 /*
     /auth/kakao로 요청시 카카오 전략를 통해서 clientID를 담아 카카오 서버로 인증을 요청한다.
     인증 성공 시 /auth/kakao/callback으로 응답이 오게 딘다.
