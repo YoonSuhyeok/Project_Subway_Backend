@@ -2,6 +2,7 @@ import * as Sequelize from 'sequelize';
 import { DataTypes, Model, Optional } from 'sequelize';
 import type { Choice_Ingredient, Choice_IngredientId } from './Choice_Ingredient';
 import type { Recipe, RecipeId } from './Recipe';
+import { sequelize } from '../models/index';
 
 export interface IngredientAttributes {
   Ingredient_id: number;
@@ -49,50 +50,48 @@ export class Ingredient extends Model<IngredientAttributes, IngredientCreationAt
   hasRecipe_id_Recipes!: Sequelize.BelongsToManyHasAssociationsMixin<Recipe, RecipeId>;
   countRecipe_id_Recipes!: Sequelize.BelongsToManyCountAssociationsMixin;
 
-  static initModel(sequelize: Sequelize.Sequelize): typeof Ingredient {
-    Ingredient.init({
-    Ingredient_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true
-    },
-    Ingredient_type: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    Ingredient_name: {
-      type: DataTypes.STRING(45),
-      allowNull: false
-    },
-    Ingredient_calorie: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    Ingredient_price: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    Ingredient_imageUrl: {
-      type: DataTypes.STRING(300),
-      allowNull: false
-    }
-  }, {
-    sequelize,
-    tableName: 'Ingredient',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "Ingredient_id" },
-        ]
-      },
-    ]
-  });
-  return Ingredient;
-  }
+  
 }
 
+Ingredient.init({
+  Ingredient_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  Ingredient_type: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Ingredient_name: {
+    type: DataTypes.STRING(45),
+    allowNull: false
+  },
+  Ingredient_calorie: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Ingredient_price: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  },
+  Ingredient_imageUrl: {
+    type: DataTypes.STRING(300),
+    allowNull: false
+  }
+}, {
+  sequelize,
+  tableName: 'Ingredient',
+  timestamps: false,
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "Ingredient_id" },
+      ]
+    },
+  ]
+});
 export default Ingredient;

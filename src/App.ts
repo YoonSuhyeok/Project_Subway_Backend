@@ -5,6 +5,8 @@ import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
 import express from 'express';
 import extraController from './routes/extraController';
+import choice_ingredientController from './routes/choice_ingredientController';
+
 
 var sequelize = require('./models').sequelize;
 sequelize.sync();
@@ -27,7 +29,8 @@ class App {
     this.application.use('/recipe', recipeController);
     this.application.use('/ingredient', ingredientController);
     this.application.use('/user',UserController);
-    //this.application.use('/menu',MenuController);
+    this.application.use('/menu',MenuController);
+    this.application.use('/choice_ingredient',choice_ingredientController);
   }
 }
 

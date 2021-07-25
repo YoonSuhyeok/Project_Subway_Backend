@@ -19,7 +19,7 @@ UserController.get('/:id', (req: express.Request, res: express.Response) => {
 //User에 데이터를 추가합니다.
 UserController.post('/', (req: express.Request, res: express.Response) => {
     User.create({
-        User_id:req.body.id, User_email:req.body.email, User_password:req.body.password, User_nickname:req.body.nickname
+        User_id:req.body.User_id, User_email:req.body.User_email, User_password:req.body.User_password, User_nickname:req.body.User_nickname
    }).then(client =>
         res.json(client)
    );    

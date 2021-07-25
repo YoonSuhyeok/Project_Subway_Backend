@@ -1,7 +1,10 @@
 
 import express from 'express';
-import Recipe from '../models/Recipe';
+import {Recipe} from '../models/Recipe';
+import {Choice_Ingredient} from '../models/Choice_Ingredient';
+import Ingredient from '../models/Ingredient';
 
+//const ChoiceIngredient:  express.Router =express.Router();
 
 const recipeController: express.Router = express.Router();
 
@@ -16,16 +19,16 @@ recipeController.get('/:id', (req: express.Request, res: express.Response) => {
     res.send(recipe) );
 });
 
-// 한 유저가 하나의 레시피 조회한다. /userId?name=에그마요   연구연구
+// 한 유저가 하나의 레시피 조회한다. 
 recipeController.get('/:id', (req: express.Request, res: express.Response) => {
   Recipe.findOne({ where: {User_id : req.params.id, Recipe_name: req.query.name }}).then( recipe => 
     res.send(recipe) );
 });
 
-// 새로운 레시피의 정보를 추가합니다.    ??왜 안됨??? fk있으면 fk문제 저거 지우면 UnhandledPromiseRejectionWarning로 뜸 
-recipeController.post('/', (req: express.Request, res: express.Response) => {
+// 새로운 레시피의 정보를 추가합니다.   
+recipeController.post('/', async (req: express.Request, res: express.Response) => {
   try {
-    Recipe.create(
+    const recipe =await Recipe.create(
       { 
         Recipe_name:req.body.name,
         User_id:req.body.User_id,
@@ -33,7 +36,16 @@ recipeController.post('/', (req: express.Request, res: express.Response) => {
         Menu_id:req.body.Menu_id, 
         Recipe_dateCreated:req.body.date
       }
-    )
+    ) 
+    const ingredient: Array<number> = req.body.ingredient;
+   
+    for (let i=0; i<ingredient.length; i++) {
+      console.log(ingredient[i]);
+       Choice_Ingredient.create({
+        "Recipe.id": recipe.Recipe_id, "Ingredient.id" : ingredient[i]
+      })
+    }
+
     res.send('success');
   } catch (error){
     res.status(400).send(error);
@@ -43,7 +55,7 @@ recipeController.post('/', (req: express.Request, res: express.Response) => {
 // 한 유저가 하나의 레시피 메뉴의 이름을 수정한다. 
 recipeController.patch('/:id', (req: express.Request, res: express.Response) => {
   try {
-    Recipe.update({Recipe_name: req.body.name },{where: {User_ID:req.params.id, Recipe_name:req.query.name}});
+    //Recipe.update({Recipe_name: req.body.name },{where: {User_ID:req.params.id, Recipe_name:req.query.name}});
     res.send('update success');
   } catch(error){
     res.status(400).send(error);

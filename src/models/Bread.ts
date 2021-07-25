@@ -9,7 +9,7 @@ export interface BreadAttributes {
 }
 
 export type BreadPk = "Bread_id";
-//export type BreadId = Bread[BreadPk];
+export type BreadId = Bread[BreadPk];
 interface BreadCreationAttributes extends Optional<BreadAttributes, BreadPk>{};
 export class Bread extends Model<BreadAttributes, BreadCreationAttributes>
  implements BreadAttributes {
