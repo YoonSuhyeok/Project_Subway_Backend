@@ -3,6 +3,7 @@ import ingredientController from './routes/ingredientController';
 import recipeController from './routes/recipeController';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
+import RatingController from './routes/ratingController';
 import express from 'express';
 import extraController from './routes/extraController';
 
@@ -26,7 +27,8 @@ class App {
     this.application.use('/extra', extraController);
     this.application.use('/recipe', recipeController);
     this.application.use('/ingredient', ingredientController);
-    this.application.use('/user',UserController);
+    this.application.use('/user', UserController);
+    this.application.use('/rating', RatingController);
     //this.application.use('/menu',MenuController);
   }
 }

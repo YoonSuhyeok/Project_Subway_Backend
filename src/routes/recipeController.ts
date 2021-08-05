@@ -1,7 +1,6 @@
 
 import express from 'express';
 import { Bread } from '../models/Bread';
-// import Bread  from '../models/Bread';
 import {Recipe} from '../models/Recipe';
   
 const recipeController: express.Router = express.Router();
@@ -13,8 +12,8 @@ recipeController.get('/', (req, res) => {
 
 // userID로 그 유저의 모든 레시피정보를 가져온다.
 recipeController.get('/:id', (req, res) => {
-  // Recipe.findAll({ where: {User_id : req.params.id }}).then( recipe =>
-  //   res.send(recipe) );
+  Recipe.findAll({ where: {User_id : req.params.id }}).then( recipe =>
+    res.send(recipe) );
 });
 
 // 한 유저가 하나의 레시피 조회한다. /userId?name=에그마요   연구연구
