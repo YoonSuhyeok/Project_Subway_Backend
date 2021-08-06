@@ -63,13 +63,7 @@
           { name: "Ingredient.id" },
         ]
       },
-      {
-        name: "fk_ChoiceIngredient_Ingredient_Ingredient.id",
-        using: "BTREE",
-        fields: [
-          { name: "Ingredient.id" },
-        ]
-      },
+      
     ]
   });
  
