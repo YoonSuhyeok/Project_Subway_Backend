@@ -38,7 +38,8 @@ User.init({
   User_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   User_email: {
     type: DataTypes.STRING(45),

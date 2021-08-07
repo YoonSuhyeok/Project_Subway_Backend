@@ -5,6 +5,8 @@ import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
 import express from 'express';
 import extraController from './routes/extraController';
+import authController from './routes/auth';
+import RatingController from './routes/ratingController';
 const passport = require('passport');
 const cors = require('cors');
 const session = require('express-session')
@@ -35,37 +37,20 @@ class App {
     this.application.use(passport.session());
     this.application.use(cors());
     this.router();
-<<<<<<< HEAD
   }
 
   private router(): void {
     this.application.get('/', (req: express.Request, res: express.Response) => {
       res.send('hello!');
     })
-=======
-    sequelize.sync();
-  }
-
-  private router(): void {
-    // this.application.get('/', (req: express.Request, res: express.Response) => {
-    //   let session = req.session;
-    //   session.user = '123';
-    //   return res.json(session);
-    // });
-    this.application.use('/allergy', alleryController);
->>>>>>> develop_kakao
     this.application.use('/bread', breadController);
     this.application.use('/extra', extraController);
     this.application.use('/recipe', recipeController);
     this.application.use('/ingredient', ingredientController);
-<<<<<<< HEAD
-    this.application.use('/user',UserController);
-    //this.application.use('/menu',MenuController);
-=======
     this.application.use('/user', UserController);
     this.application.use('/menu', MenuController);
     this.application.use('/auth', authController);
->>>>>>> develop_kakao
+    this.application.use('/rating', RatingController);
   }
 }
 

@@ -97,10 +97,10 @@ authController.post('/kakao', async (req: express.Request, res) => {
   const code: string | undefined = req.headers.authorization?.substr(6);
   try{
     const redirectUrl = process.env.redirectUrl;
-    const result = await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=12a7a0cf669e322de8404d4da83ca650&redirect_uri=${redirectUrl}/logins&code=${code}`)
+    const result = await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=12a7a0cf669e322de8404d4da83ca650&redirect_uri=${redirectUrl}/logins.kakao&code=${code}`)
     res.send(result.data);
   } catch(e) {
-    console.log("에러 발생");
+    console.log(e);
   }
   
   
