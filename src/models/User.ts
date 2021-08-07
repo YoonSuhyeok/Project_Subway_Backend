@@ -43,11 +43,11 @@ User.init({
   },
   User_email: {
     type: DataTypes.STRING(45),
-    allowNull: false
+    allowNull: true
   },
   User_password: {
     type: DataTypes.STRING(18),
-    allowNull: false
+    allowNull: true
   },
   User_nickname: {
     type: DataTypes.STRING(10),

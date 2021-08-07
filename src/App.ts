@@ -10,6 +10,7 @@ import RatingController from './routes/ratingController';
 const passport = require('passport');
 const cors = require('cors');
 const session = require('express-session')
+import choice_ingredientController from './routes/choice_ingredientController';
 
 declare module 'express-session' {
   export interface SessionData {
@@ -51,6 +52,10 @@ class App {
     this.application.use('/menu', MenuController);
     this.application.use('/auth', authController);
     this.application.use('/rating', RatingController);
+    this.application.use('/user',UserController);
+    this.application.use('/menu',MenuController);
+    this.application.use('/choice_ingredient',choice_ingredientController);
+
   }
 }
 

@@ -54,3 +54,6 @@ Bread.init(
       },
     ]
   });
+
+  
+export default Bread;
