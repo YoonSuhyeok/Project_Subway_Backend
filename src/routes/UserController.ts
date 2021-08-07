@@ -2,6 +2,7 @@ import express from 'express';
 import { User } from '../models/User';
 
 const UserController: express.Router = express.Router();
+
 //User에 있는 모든 정보를 가져옵니다.
 UserController.get('/', (req: express.Request, res: express.Response) => {
     User.findAll().then( client =>
@@ -17,6 +18,7 @@ UserController.get('/:id', (req: express.Request, res: express.Response) => {
         res.json(client)
     );
 })
+
 //User에 데이터를 추가합니다.
 UserController.post('/', (req: express.Request, res: express.Response) => {
     User.create({
@@ -33,6 +35,7 @@ UserController.patch('/:id', (req: express.Request, res: express.Response) => {
         res.json(client)
      }); 
 })
+
 // 선택한 User의 정보(pw)를 수정합니다. => 닉네임이나 비밀번호 등등 수정할 수 있게  @현재 작동안됨
 UserController.patch('/', (req: express.Request, res: express.Response) => {
     User.update({User_password: req.body.User_password},{where: {User_id:req.query.id}})
