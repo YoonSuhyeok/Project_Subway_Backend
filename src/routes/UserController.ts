@@ -1,6 +1,9 @@
 import express from 'express';
 import { User } from '../models/User';
 import bcrypt from 'bcrypt';
+import Mail from '../models/Mail';
+import * as moment from 'moment-timezone';
+const dateSeoul: Date = moment.tz(Date.now(), "Asia/Seoul").add(9, 'hour').toDate();
 
 const UserController: express.Router = express.Router();
 
@@ -25,6 +28,18 @@ UserController.post('/', async (req: express.Request, res: express.Response) => 
      }).then(client =>
         res.json(client)
    );    
+})
+
+UserController.get('/key', async (req: express.Request, res: express.Response) => {
+    let key = '';
+    for(let i=0; i<6; ++i)
+        key+=Math.floor(Math.random()*9)+1
+    console.log(key);
+    const user_email = req.query!.userId;
+    const userId = await User.findOne({where: { User_email: user_email }});
+
+    Mail.create({key: key, User_id: userId!.User_id, Mail_dateCreated: dateSeoul.toString()});
+    
 })
 
 // 선택한 User의 정보(닉네임)를 수정합니다. => 닉네임이나 비밀번호 등등 수정할 수 있게
