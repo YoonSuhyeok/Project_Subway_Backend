@@ -46,7 +46,7 @@ User.init({
     allowNull: true
   },
   User_password: {
-    type: DataTypes.STRING(18),
+    type: DataTypes.STRING(255),
     allowNull: true
   },
   User_nickname: {

@@ -3,7 +3,6 @@ import ingredientController from './routes/ingredientController';
 import recipeController from './routes/recipeController';
 import UserController from './routes/UserController';
 import MenuController from './routes/MenuController';
-import RatingController from './routes/ratingController';
 import express from 'express';
 import extraController from './routes/extraController';
 import authController from './routes/auth';
