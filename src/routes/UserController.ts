@@ -1,24 +1,27 @@
-const { DataTypes } =require('sequelize');
-import { sequelize } from '../models/index';
 import express from 'express';
 import { User } from '../models/User';
+import bcrypt from 'bcrypt';
 
 const UserController: express.Router = express.Router();
 
 //User중 선택한 User_id의 정보를 가져옵니다.
-UserController.post('/login', (req: express.Request, res: express.Response) => {
-    User.findOne({
+UserController.post('/login', async (req: express.Request, res: express.Response) => {
+    const user = await User.findOne({
         where: {User_email : req.body.email, User_password: req.body.password}
-    }).then( client =>{
-        if(!client){ res.status(404).send('fail'); }
-        res.send('success')
     })
+    
+    const loginState = await bcrypt.compare(user!.User_password, req.body.password)
+
+    if(loginState){ res.status(404).send('fail'); }
+    res.send('success')
 })
 
 //User에 데이터를 추가합니다.
-UserController.post('/', (req: express.Request, res: express.Response) => {
+UserController.post('/', async (req: express.Request, res: express.Response) => {
     User.create({
-        User_email: req.body.email, User_password: req.body.password , User_nickname:req.body.nickname
+        User_email: req.body.email,
+         User_password: await bcrypt.hash(req.body.password, 10),
+          User_nickname:req.body.nickname
      }).then(client =>
         res.json(client)
    );    
