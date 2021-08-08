@@ -5,6 +5,6 @@ dotenv.config();
 
 const app = new App().application;
 
-app.listen(3000, async () => {
+app.listen(3000, '0.0.0.0', async () => {
   console.log('Server listening on port 3000');
 });

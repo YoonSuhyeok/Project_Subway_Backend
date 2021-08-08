@@ -113,6 +113,7 @@ Recipe.init({
   }
 }, {
   sequelize,
+  
   tableName: 'Recipe',
   timestamps: false,
   indexes: [
@@ -150,3 +151,6 @@ Recipe.init({
     },
   ]
 });
+
+ 
+export default Recipe;

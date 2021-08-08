@@ -38,15 +38,16 @@ User.init({
   User_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   User_email: {
     type: DataTypes.STRING(45),
-    allowNull: false
+    allowNull: true
   },
   User_password: {
     type: DataTypes.STRING(18),
-    allowNull: false
+    allowNull: true
   },
   User_nickname: {
     type: DataTypes.STRING(10),
