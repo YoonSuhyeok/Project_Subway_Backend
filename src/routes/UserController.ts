@@ -2,8 +2,11 @@ import express from 'express';
 import { User } from '../models/User';
 import bcrypt from 'bcrypt';
 import Mail from '../models/Mail';
+import nodemailer from 'nodemailer';
 import * as moment from 'moment-timezone';
 const dateSeoul: Date = moment.tz(Date.now(), "Asia/Seoul").add(9, 'hour').toDate();
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const UserController: express.Router = express.Router();
 
@@ -40,6 +43,47 @@ UserController.get('/key', async (req: express.Request, res: express.Response) =
 
     Mail.create({key: key, User_id: userId!.User_id, Mail_dateCreated: dateSeoul.toString()});
     
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: process.env.NODEMAILER_USER,
+            pass: process.env.NODEMAILER_PASS,
+        }
+    });
+
+    const mailOptions = {
+        from: process.env.NODEMAILER_USER,
+        to: user_email!.toString(),
+        subject: '섭웨이 이메일 인증',
+        text: `인증번호: ${key}\n 5분 안에 입력하세요`
+    };
+
+    transporter.sendMail(mailOptions, (error, info)=>{
+        if(error){ console.log(error )}
+        else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+
+    res.send('인증번호 발송');
+})
+
+UserController.get('/certify', async (req: express.Request, res: express.Response) => {
+    
+    const user_email = req.query!.userId;
+    const userId = await User.findOne({where: { User_email: user_email }});
+
+    const check = await Mail.findOne({
+        where: { User_id: userId?.User_id, key: req.query.key }
+    })
+    const mailDate = Date.parse(check!.Mail_dateCreated);
+    const seoul = Date.parse(moment.tz(Date.now(), "Asia/Seoul").add(9, 'hour').toDate().toString());
+    const diff = seoul - mailDate;
+    const minute = Math.floor(diff/60/1000)
+
+    if(minute >= 5) res.status(400).send('시간 초과');
+    else if(!check) res.status(404).send('올바르지 않은 인증번호입니다.');
+    else res.send('true');
 })
 
 // 선택한 User의 정보(닉네임)를 수정합니다. => 닉네임이나 비밀번호 등등 수정할 수 있게
