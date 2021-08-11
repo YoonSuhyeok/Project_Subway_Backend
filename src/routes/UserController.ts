@@ -69,21 +69,28 @@ UserController.get('/key', async (req: express.Request, res: express.Response) =
 })
 
 UserController.get('/certify', async (req: express.Request, res: express.Response) => {
-    
+    console.log('hihi')
     const user_email = req.query!.userId;
     const userId = await User.findOne({where: { User_email: user_email }});
 
     const check = await Mail.findOne({
         where: { User_id: userId?.User_id, key: req.query.key }
     })
+    if(!check) return res.status(404).send('not exist token')
+
     const mailDate = Date.parse(check!.Mail_dateCreated);
     const seoul = Date.parse(moment.tz(Date.now(), "Asia/Seoul").add(9, 'hour').toDate().toString());
     const diff = seoul - mailDate;
-    const minute = Math.floor(diff/60/1000)
-
-    if(minute >= 5) res.status(400).send('시간 초과');
-    else if(!check) res.status(404).send('올바르지 않은 인증번호입니다.');
-    else res.send('true');
+    console.log(diff)
+    const minute = Math.floor(diff/60/1000/1000)
+    console.log(minute)
+    
+    if(minute >= 5) res.status(400).send('timeout');
+    else if(!check) res.status(400).send('invaild token');
+    else {
+        Mail.destroy({where: { User_id: userId?.User_id, key: req.query.key } })
+        res.send('true');
+    }
 })
 
 // 선택한 User의 정보(닉네임)를 수정합니다. => 닉네임이나 비밀번호 등등 수정할 수 있게
